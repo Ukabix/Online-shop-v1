@@ -1,0 +1,30 @@
+<ul class="nav-items">
+  <!-- for all customer users -->
+  <% if (!locals.isAdmin) { %>
+    <li><a href="/">Shop</a></li>
+    <li><a href="/cart">Cart <span class="badge"><%= locals.cart.totalQuantity %></span></a></li>
+  <% } %>
+  <!-- for customer logged users -->
+  <% if (locals.isAuth && !locals.isAdmin) { %>
+    <li><a href="/orders">Orders</a></li>
+  <% } %>
+  <!-- for admins -->
+  <% if (locals.isAdmin) { %>
+   <li><a href="/admin/products">Product management</a></li>
+   <li><a href="/admin/orders">Order management</a></li>
+  <% } %>
+  <!-- for all not logged users -->
+  <% if (!locals.isAuth) { %>
+   <li><a href="/signup">Signup</a></li>
+   <li><a href="/login">Login</a></li>
+  <% } %>
+  <!-- for all logged users -->
+  <% if (locals.isAuth) { %>
+   <li>
+    <form action="/logout" method="POST">
+      <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+      <button>Logout</button>
+    </form>
+   </li>
+  <% } %>
+</ul>
